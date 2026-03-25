@@ -26,6 +26,10 @@
     font-family: 'Inter', sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 /* --- Navbar --- */
 .navbar {
     background-color: var(--green-light-bg); /* Usa o mesmo verde claro do rodapé */
@@ -225,6 +229,11 @@ p { color: var(--text-gray); font-size: 1rem; margin-bottom: 20px; }
     background-color: var(--green-card);
     padding: 30px;
     border-radius: 12px;
+    
+}
+.about-grid .card:hover {
+    transform: translateY(-10px); 
+    box-shadow: 0 10px 20px rgba(122, 88, 88, 0.1); 
 }
 .card p { color: var(--text-dark); margin: 0; font-size: 0.9rem; }
 .card .icon {
