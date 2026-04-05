@@ -266,16 +266,62 @@ p { color: var(--text-gray); font-size: 1rem; margin-bottom: 20px; }
     gap: 30px;
     margin-top: 50px;
 }
+
 .card {
     background-color: var(--green-card);
     padding: 30px;
     border-radius: 12px;
+    position: relative;
+    /* Transição suave para o card todo (sombra e posição) */
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: default;
 }
-.card p { color: var(--text-dark); margin: 0; font-size: 0.9rem; }
+
+/* Efeito de subir o card - Ajustado para ser mais fluido */
+.about-grid .card:hover {
+    transform: translateY(-10px); 
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12); 
+}
+
+/* --- O SEGREDO DA SUAVEZA --- */
+
+/* 1. O conteúdo extra começa com altura ZERO e invisível */
+.card .extra-content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    /* Adicionamos um delay minúsculo na opacidade para ela aparecer enquanto abre */
+    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 0.4s ease-out,
+                margin-top 0.5s ease;
+}
+
+/* 2. Quando passar o mouse no CARD, o conteúdo desenrola */
+.card:hover .extra-content {
+    max-height: 200px; /* Valor fixo maior que o texto, mas não exagerado */
+    opacity: 1;
+    margin-top: 15px; /* Dá o espaçamento suave entre o texto fixo e o extra */
+}
+
+/* Ajustes finos nos textos e ícones */
+.card p { 
+    color: var(--text-dark); 
+    margin: 0; 
+    font-size: 0.9rem; 
+    line-height: 1.5;
+}
+
 .card .icon {
     font-size: 1.5rem;
     color: var(--text-dark);
     margin-bottom: 20px;
+    /* O ícone também reage suavemente */
+    transition: transform 0.4s ease;
+}
+
+.card:hover .icon {
+    transform: scale(1.1) rotate(5deg); /* Dá uma leve "vivida" no ícone */
 }
 
 /* --- Specialties --- */
@@ -304,7 +350,18 @@ p { color: var(--text-gray); font-size: 1rem; margin-bottom: 20px; }
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
 }
+
+.spec-card:hover {
+    /* Faz o card subir 8 pixels */
+    transform: translateY(-8px);
+    
+    /* Adiciona uma sombra suave para dar profundidade */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
 .spec-img {
     height: 140px;
     background-color: #1b3d36; /* Cor escura simulando as imagens do protótipo */
@@ -319,6 +376,28 @@ p { color: var(--text-gray); font-size: 1rem; margin-bottom: 20px; }
     font-size: 0.85rem;
     color: var(--text-dark);
     flex: 1;
+}
+
+/* Escondido por padrão */
+.extra-content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+}
+
+/* SÓ abre o conteúdo que está dentro de um card com a classe 'expanded' */
+.spec-card.expanded .extra-content {
+    max-height: 200px; 
+    opacity: 1;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+/* Estilo do botão quando aberto */
+.spec-card.expanded .btn-expand {
+    background-color: #8B5A2B; /* Cor marrom citada no seu projeto */
+    color: white;
 }
 
 /* --- CTA --- */
