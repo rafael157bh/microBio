@@ -1,20 +1,15 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.btn-expand');
+function initMap() {
+  const localizacao = { lat: -24.9463583, lng: -53.4468717 };
 
-    buttons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Encontra o card pai EXCLUSIVO deste botão
-            const card = this.closest('.spec-card');
-            
-            // Alterna a classe apenas no card clicado
-            card.classList.toggle('expanded');
+  const mapa = new google.maps.Map(document.getElementById("map"), {
+    zoom: 17,
+    center: localizacao,
+    mapTypeId: "roadmap"
+  });
 
-            // Muda o texto do botão clicado
-            if (card.classList.contains('expanded')) {
-                this.textContent = 'FECHAR';
-            } else {
-                this.textContent = 'DETALHES';
-            }
-        });
-    });
-});
+  new google.maps.Marker({
+    position: localizacao,
+    map: mapa,
+    title: "Casa de Francisco"
+  });
+}
