@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Solicitação - Microbio</title>
+    <!-- Substitua pelo caminho correto do seu CSS -->
+    <link rel="stylesheet" href="forms.css">
+</head>
+<body>
+
+    <div class="microbio-form-container">
+        <div class="form-header">
+            <h2>Solicitar Orçamento</h2>
+            <p>Preencha os dados abaixo para registrar sua solicitação.</p>
+        </div>
+
+        <!-- O th:object deve corresponder ao nome do objeto passado no Model do seu Controller -->
+        <form th:action="@{/solicitacoes/salvar}" th:object="${solicitacao}" method="POST" id="formSolicitacao">
+            
+            <!-- ID Oculto para casos de edição -->
+            <input type="hidden" th:field="*{id}">
+
+            <div class="form-group">
+                <label for="nome">Nome Completo <span class="required">*</span></label>
+                <input type="text" id="nome" th:field="*{nome}" placeholder="Digite seu nome" required maxlength="150">
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" th:field="*{email}" placeholder="exemplo@email.com" maxlength="150">
+                </div>
+
+                <div class="form-group">
+                    <label for="telefone">Telefone</label>
+                    <input type="tel" id="telefone" th:field="*{telefone}" placeholder="(00) 00000-0000" maxlength="20">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="cliente">Análise Solicitada <span class="required">*</span></label>
+                <select id="cliente" th:field="*{cliente.id}" required>
+                    <option value="" disabled selected>Selecione...</option>
+                    <!-- Itera sobre uma lista de clientes passada pelo Controller -->
+                    <option th:each="cliente : ${clientes}" 
+                            th:value="${cliente.id}" 
+                            th:text="${cliente.nome}">Controle de Qualidade em Bioinsumos</option>
+                            th:text="${cliente.nome}">Controle de Qualidade em Bioinsumos</option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <!-- Botão com a cor de destaque (marrom/ocre) da interface -->
+                <button type="submit" class="btn-submit">Enviar Solicitação</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Substitua pelo caminho correto do seu JS -->
+    <script th:src="@{/js/form-script.js}"></script>
+</body>
+</html>
