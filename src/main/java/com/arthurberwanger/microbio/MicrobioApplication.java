@@ -18,20 +18,29 @@ public class MicrobioApplication {
 	@Bean
 	CommandLineRunner initUsuarios(UsuarioRepository repository,
 								   PasswordEncoder encoder) {
+
 		return args -> {
 			repository.findByLogin("admin").ifPresentOrElse(
+
 					admin -> {
 						if (!admin.isAdmin()) {
 							admin.setAdmin(true);
 							repository.save(admin);
-							System.out.println("=== Usuário admin corrigido: is_admin = true ===");
+
+							System.out.println("=== Usuário admin corrigido ===");
 						}
 					},
+
 					() -> {
-						Usuario admin = new Usuario("admin", encoder.encode("admin123"), true);
+						Usuario admin = new Usuario(
+								"admin",
+								encoder.encode("admin123"),
+								true
+						);
+
 						repository.save(admin);
-						System.out.println("=== Usuário admin criado! ===");
-						System.out.println("    login: admin / senha: admin123");
+
+						System.out.println("=== Usuário admin criado ===");
 					}
 			);
 		};
